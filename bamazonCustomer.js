@@ -1,14 +1,10 @@
-//************************************************//
-//*****       set required npm modules       *****//
-//************************************************//
-//
-//-- file system  --//
+//   file system    //
 	var fs = require("fs");
 
-//-- inquirer  --//
+//   inquirer    //
 	var inquirer = require("inquirer");
 
-//-- mysql  --//
+//   mysql    //
 	var mysql = require("mysql");
 
 	var keys = require("./keys.js");
@@ -20,39 +16,30 @@
     	//console.log("Connection made");
 		});
 
-//--  table and formatting  --//
+//    table and formatting    //
 	var cliTable = require("cli-table");
 
 	var colors = require("colors");
 
 
-//************************************************//
-//*****    declare global variables          *****//
-//************************************************//
-//
-
 	var welcome = "    **********************************************************************\n" +
-				  "    **********              WELCOME TO BAMAZON                  **********\n" +
-				  "    **********  Please browse our items and make a purchase !!  **********\n" +
-				  "    **********                                                  **********\n" +
+				  "    **********              WELCOME TO BAMAZON STORE            **********\n" +
+				  "    **********      Please browse items on hand to make a       **********\n" +
+					"    **********       purchase !!                                **********\n" +
+					"    **********                                                  **********\n" +
 				  "    **********************************************************************\n\r"
 
 	var orderMsg;
 
 	var goodbye = "    **********************************************************************\n" +
-				  "    **********       THANK YOU FOR SHOPPING BAMAZON             **********\n" +
+				  "    **********      THANK YOU FOR SHOPPING AT BAMAZON           **********\n" +
 				  "    **********          Please visit us again! ;)               **********\n" +
 				  "    **********                                                  **********\n" +
 				  "    **********************************************************************\n\r"
 
 
 
-//************************************************//
-//*****           global functions           *****//
-//************************************************//
-//
-
-//----  Display table of items for sale  ----//
+//  --  Display table of items for sale  --  //
 	function displayProducts() {
 
 		console.log(welcome);
@@ -63,7 +50,7 @@
 		    //console.log(" Reached first function")
 			var table = new cliTable({
 				head: ["Item Number".cyan, "Product Name".cyan, "Department".cyan, "Price".cyan, "Quantity".cyan],
-				colWidths: [13, 20, 20, 13, 13],
+				colWidths: [13, 25, 13, 10, 10],
 				});
 			
 			for(var i = 0; i < res.length; i++) {
@@ -78,18 +65,18 @@
 	};
 
 	
-//----  Get user order input and update tables  ----//
+// User order input and table updates //
 	function orderMenu(){
 
 		inquirer.prompt([
 			{
 				type: "input",
-				message: "Which item would you like to purchase? (Iten Number) ",
+				message: "Which item(s) would you like to purchase? (Item Number) ",
 				name: "itemNum"
 			},
 			{
 				type: "input",
-				message: "How many would you like to purchase?",
+				message: "How many items would you like to purchase?",
 				name: "Qty"
 			}
 		])
@@ -108,7 +95,7 @@
 			    		var OrderTotal = parseFloat(res[i].price) * parseFloat(userOrder.Qty);
 				    		OrderTotal = OrderTotal.toFixed(2);
 
-	    			//-- Update the product table stock quantity  --//
+	    			// Update the product table stock quantity  //
 		    			connection.query("UPDATE products SET ? WHERE ?", 
 			    			[ {
 			    				stock_quantity: updateQty
@@ -128,7 +115,7 @@
 		    			);
 
 
-		    		//-- Update the departments table total sales  --//
+		    		//   Update the departments table total sales    //
 		    			var deptSales = parseFloat(res[i].total_sales) + parseFloat(OrderTotal);
 				    		deptSales = deptSales.toFixed(2);
 
@@ -157,7 +144,7 @@
 	};
 
 
-//----  Ask the user if they would like to continue shopping  ----//
+//   Ask the user if they would like to continue shopping   //
 	function continueShopping(){
 		inquirer.prompt([
 			{
@@ -178,15 +165,13 @@
 
 
 
-//----  Say goodbye  ----//
+//  Exit and display message //
 	function exitBamazon(){
 		connection.end();
 		console.log(goodbye);
 	};
 
 
-//************************************************//
-//*****          Start the program           *****//
-//************************************************//
-//
+// ***********************************************//
+// Start
 	displayProducts();
