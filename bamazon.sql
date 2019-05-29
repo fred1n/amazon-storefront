@@ -5,7 +5,6 @@ USE bamazon_db;
 
 -- Create a database called bamazon_db --
 -- CREATE DATABASE bamazon_db;
--- numeric(19,4)
 
 -- Use programming db for the following statements --
 
@@ -52,3 +51,24 @@ VALUES ("Women's gloves", "Women's", 30, 100);
 SELECT * FROM products;
   
  
+ CREATE TABLE departments(
+dept_id integer auto_increment NOT NULL PRIMARY KEY,
+department_name varchar(30) NULL,
+overhead_costs numeric(10,2)
+);
+
+
+INSERT INTO departments (department_name, overhead_costs)
+VALUES ("Women's", 1000.00);
+
+INSERT INTO departments (department_name, overhead_costs)
+VALUES  ("Men's", 1000.00);
+-- INSERT INTO departments (department_name, overhead_costs)
+-- VALUES  ("Accessories", 20000)
+-- INSERT INTO departments (department_name, overhead_costs)
+-- VALUES  ("Appliances", 15000)
+-- INSERT INTO departments (department_name, overhead_costs)
+-- VALUES  ("Electronics", 7000)
+-- VALUES  ("Outdoors", 6500);
+
+SELECT * FROM departments;
