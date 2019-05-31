@@ -38,7 +38,6 @@
 				  "    **********************************************************************\n\r"
 
 
-
 //  --  Display table of items for sale  --  //
 	function displayProducts() {
 
@@ -71,7 +70,7 @@
 		inquirer.prompt([
 			{
 				type: "input",
-				message: "Which item(s) would you like to purchase? (Item Number) ",
+				message: "Which item would you like to purchase? (Item Number) ",
 				name: "itemNum"
 			},
 			{
@@ -115,7 +114,7 @@
 		    			);
 
 
-		    		//   Update the departments table total sales    //
+		    		//   Update the departments table  //
 		    			var deptSales = parseFloat(res[i].total_sales) + parseFloat(OrderTotal);
 				    		deptSales = deptSales.toFixed(2);
 
@@ -124,7 +123,6 @@
 				    		{	department_name: res[userOrder.itemNum - 1].department_name }
 				    		], 
 			    			function(error, results) {
-			    				//console.log("Order status updated. " + deptSales)
 			    				continueShopping();
 			    			}
 			    		);
@@ -144,7 +142,7 @@
 	};
 
 
-//   Ask the user if they would like to continue shopping   //
+//   Prompt user if they want to continue shopping   //
 	function continueShopping(){
 		inquirer.prompt([
 			{
@@ -172,6 +170,5 @@
 	};
 
 
-// ***********************************************//
 // Start
 	displayProducts();
